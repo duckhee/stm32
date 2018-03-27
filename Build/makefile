@@ -24,17 +24,17 @@ SRC_HW = ../HW/Hw_Core/$(STARTUP_C)                  \
 
 
 #src aplication c file
-SRC_AP = ../AP/Ap_Core
+SRC_AP = ../AP/Ap_Core                                   \
          ../AP
 
 
 #src library c file
-SRC_LIB = ../LIB/Ld_printc.                          \
+SRC_LIB = ../LIB/Ld_print.c                          \
           ../
 
 
 #src menu c file
-SRC_MENU = ../Menu/
+SRC_MENU = ../Menu/menu_command.c                                 \
            ../
 
 #source file 
@@ -127,7 +127,7 @@ REMOVE = $(REMOVE_CMD) -rf
 #CFLAGS += -mfpu=fpv4-sp-d16 -mfloat-abi=hard
 
 # Flags for C and C++ (arm-elf-gcc/arm-elf-g++) -DSTM32F10X_MD는 칩의 사양을 선택하는 것 
-CFLAGS = -gdwarf-2 -O2 -mcup=cortex-m3 -mthumb-interwork -DSTM32F10X_MD
+CFLAGS = -gdwarf-2 -O2 -mcpu=cortex-m3 -mthumb-interwork -DSTM32F10X_MD
 CFLAGS += $(INCLUDE) -mlong-calls -ffunction-sections -fdata-sections -Wall -Wextra -Wimplicit -Wcast-align -Wpointer-arith -Wredundant-decls
 CFLAGS += -Wshadow -Wcast-qual -Wcast-align -Wa,-adhlns=start_stm32f10x.lst -MD -MP -MF $(TARGET).elf.d
 
@@ -154,7 +154,7 @@ CONLYFLAGS += -std=gnu99
 #ELF32_LDFLAGS = -Wl,-T,stm32f10x.ld
 #LDFLAGS = -Map=$(TARGET).map --cref
 #이게 맞는지? 정적 파일과 lib 사용과 startfile 사용을 하지 않는다고 선언 하는 것 -nostdlib 라이브러리 사용 하지 않는다는 flag
-LDFLAGS = -static -nostdlib -nostartfiles -Wl,-Map=$(TARGET).map,--cref,--gc-sections -L./ -lc -lm -lc -lgcc -T.//STM32f10x.ld
+LDFLAGS = -static -nostdlib -nostartfiles -Wl,-Map=$(TARGET).map,--cref,--gc-sections -L./ -lc -lm -lc -lgcc -T.//STM32f10x_flash.ld
 
 #object file size get elf size
 ELFSIZE = $(SIZE) -A $(TARGET).elf
