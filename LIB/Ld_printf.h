@@ -1,6 +1,8 @@
 #ifndef __LD_PRINTF_H__
 #define __LD_PRINTF_H__
 
+#include "Hw.h"
+
 #ifdef LD_PRINTF_LOCAL
 #define LD_PRINTF_DEF
 #else

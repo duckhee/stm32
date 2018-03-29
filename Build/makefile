@@ -13,39 +13,50 @@ EXTRAINCDIRS = ../LIB               \
 			   ../Hw/Hw_Lib         \
 			   ../AP                \
 			   ../AP/Ap_Core        \
-			   ../AP/Ap_Lib         \
 			   ../Menu              \
 			   ../Main              \
+			   #../AP/Ap_Lib         \
 
 #src hardware c file
-SRC_HW = ../HW/Hw_Core/$(STARTUP_C)                  \
-         ../Hw_Hw_Core/
+SRC_HW = ../HW/Hw_Core/$(STARTUP_C)                      \
+         ../HW/Hw_Core/Hw_Rcc.c                          \
+		 ../HW/Hw_Core/Hw_GPIO.c                         \
+		 ../HW/Hw_Core/Hw.c                              \
+		 ../HW/Hw_Core/Hw_SysTick.c                      \
+		 ../HW/Hw_Core/Hw_Usart.c                        \
+		 ../HW/Hw_Core/Hw_EXTI.c                         \
+		 ../HW/Hw_Core/Hw_IRQ.c                          \
+		 ../HW/Hw_Core/Hw_NVIC.c                         \
+		 ../HW/Hw_Lib/Hw_Led.c                           \
+		 
 
 
 
 #src aplication c file
-SRC_AP = ../AP/Ap_Core                                   \
-         ../AP
+SRC_AP = ../Main/main.c                                  \
+         ../AP/Ap_Core/Get_SysClock.c                    \
+         #../AP
 
 
 #src library c file
-SRC_LIB = ../LIB/Ld_print.c                          \
-          ../
+SRC_LIB = ../LIB/Ld_printf.c                          \
+          ../LIB/Util.c
 
 
 #src menu c file
 SRC_MENU = ../Menu/menu_command.c                                 \
-           ../
+           #../
 
 #source file 
-SRC = $(SRC_HW) $(SRC_AP) $(SRC_LIB) $(SRC_MENU) 
+SRC =$(SRC_HW) $(SRC_LIB) $(SRC_MENU) $(SRC_AP)
 #thumb mode
 THUMB = -mthumb
 #include header
 INCLUDE = -I./include -I.
 
-#c compiler option
+#C compiler option
 CC = $(PREFIX)gcc
+CPP = $(PREFIX)g++
 OBJCOPY = $(PREFIX)objcopy
 OBJDUMP = $(PREFIX)objdump
 OBJNM = $(PREFIX)nm
@@ -127,15 +138,15 @@ REMOVE = $(REMOVE_CMD) -rf
 #CFLAGS += -mfpu=fpv4-sp-d16 -mfloat-abi=hard
 
 # Flags for C and C++ (arm-elf-gcc/arm-elf-g++) -DSTM32F10X_MD는 칩의 사양을 선택하는 것 
-CFLAGS = -gdwarf-2 -O2 -mcpu=cortex-m3 -mthumb-interwork -DSTM32F10X_MD
-CFLAGS += $(INCLUDE) -mlong-calls -ffunction-sections -fdata-sections -Wall -Wextra -Wimplicit -Wcast-align -Wpointer-arith -Wredundant-decls
+CFLAGS  = -gdwarf-2 -O2 -mcpu=cortex-m3 -mthumb-interwork -DSTM32F10X_MD 
+CFLAGS += $(INCLUDE) -mlong-calls -ffunction-sections -fdata-sections -Wall -Wextra -Wimplicit -Wcast-align -Wpointer-arith -Wredundant-decls 
 CFLAGS += -Wshadow -Wcast-qual -Wcast-align -Wa,-adhlns=start_stm32f10x.lst -MD -MP -MF $(TARGET).elf.d
 
 #header file path remove
-CFLAGS += $(patsubst %, -I%,$(EXTRAINCDIRS))
+CFLAGS += $(patsubst %,-I%,$(EXTRAINCDIRS))
 
 #flag only for C
-CONLYFLAGS += -Wnested-externs
+CONLYFLAGS += -Wnested-externs 
 
 # Compiler flag to set the C Standard level.
 # c89   - "ANSI" C
@@ -154,7 +165,7 @@ CONLYFLAGS += -std=gnu99
 #ELF32_LDFLAGS = -Wl,-T,stm32f10x.ld
 #LDFLAGS = -Map=$(TARGET).map --cref
 #이게 맞는지? 정적 파일과 lib 사용과 startfile 사용을 하지 않는다고 선언 하는 것 -nostdlib 라이브러리 사용 하지 않는다는 flag
-LDFLAGS = -static -nostdlib -nostartfiles -Wl,-Map=$(TARGET).map,--cref,--gc-sections -L./ -lc -lm -lc -lgcc -T.//STM32f10x_flash.ld
+LDFLAGS = -static -nostdlib -nostartfiles -Wl,-Map=$(TARGET).map,--cref,--gc-sections -L./ -lc  -lm  -lc -lgcc -T.//STM32F103x_flash.ld
 
 #object file size get elf size
 ELFSIZE = $(SIZE) -A $(TARGET).elf
@@ -169,15 +180,15 @@ MSG_CLEANING = Cleaning project:
 MSG_ASMFROMC = "Creating asm-File from C-Source:"
 
 
+
 #list all src file
-ALLSRC = $(SRC)
+ALLSRC     =  $(SRC)
 
 #list of all source files without directory and file-extension. 기본 경로 삭제 ?
 ALLSRCBASE = $(notdir $(basename $(ALLSRC)))
-
 # Define all object files.
 #ALLOBJ = $(addprefix $(OUTDIR)/, $(addsuffix .o, $(ALLSRCBASE)))
-ALlOBJ = $(addprefix .o, $(ALLSRCBASE))
+ALLOBJ = $(addsuffix .o, $(ALLSRCBASE))
 
 
 #$@화면에 표출 
@@ -186,7 +197,7 @@ ALlOBJ = $(addprefix .o, $(ALLSRCBASE))
 all: createdirs build sizeinfo gcc_version
 
 elf: $(TARGET).elf
-lss: $(TARGET).lss
+lss: $(TARGET).lss 
 sym: $(TARGET).sym
 hex: $(TARGET).hex
 bin: $(TARGET).bin
@@ -198,9 +209,10 @@ sizeinfo:
 	@echo code size $@
 	$(ELFSIZE)
 
+
 #gcc version command
 gcc_version:
-	@echo gcc version $@
+	@echo gcc version make $@
 	$(CC) --version
 
 # Create output directories.
@@ -222,8 +234,9 @@ createdirs:
 # Create extended listing file/disassambly from ELF output file.
 # using objdump testing: option -C
 %.lss: %.elf
-	@echo $(MSG_LOAD_LISTING) $@
+	@echo $(MSG_EXTENDED_LISTING) $@
 	$(OBJDUMP) -h -S -C -r $< > $@
+#	$(OBJDUMP) -x -S $< > $@
 
 # Create a symbol table from ELF output file.
 %.sym: %.elf
@@ -233,7 +246,7 @@ createdirs:
 # Link: create ELF output file from object files.
 .SECONDARY : $(TARGET).elf
 .PRECIOUS : $(ALLOBJ)
-%.elf: $(ALLOBJ)
+%.elf:  $(ALLOBJ)
 	@echo $(MSG_LINKING) $@
 	$(CC) $(THUMB) $(CFLAGS) $(ALLOBJ) --output $@ $(LDFLAGS)
 
@@ -241,15 +254,14 @@ createdirs:
 define COMPILE_C_TEMPLATE
 $(notdir $(basename $(1))).o : $(1)
 	@echo $(MSG_COMPILING) $$< to $$@
-	$(CC) -c $(THUMB) $$(CFLAGS) $$(CONLYFLAGS) $$< -o $$@
+	$(CC) -c $(THUMB) $$(CFLAGS) $$(CONLYFLAGS) $$< -o $$@ 
 endef
-$(foreach src, $(SRC), $(eval $(call COMPILE_C_TEMPLATE, $(SRC))))
+$(foreach src, $(SRC), $(eval $(call COMPILE_C_TEMPLATE, $(src)))) 
 
 # Compile: create assembler files from C source files. ARM/Thumb
 $(SRC:.c=.s) : %.s : %.c
 	@echo $(MSG_ASMFROMC) $< to $@
 	$(CC) $(THUMB) -S $(CFLAGS) $(CONLYFLAGS) $< -o $@
-
 	
 ###################################################################################################
 ###################################################################################################
