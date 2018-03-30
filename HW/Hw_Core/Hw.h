@@ -14,9 +14,12 @@
 #include "Hw_EXTI.h"
 #include "Hw_IRQ.h"
 #include "Hw_NVIC.h"
+#include "Hw_TIM.h"
+
 
 //driver add
 #include "Hw_Led.h"
+#include "Hw_Key.h"
 //lib add
 #include "Ld_printf.h"
 #include "Util.h"

@@ -8,5 +8,8 @@ int main(void)
     HW_Init();
     RCC_GetClocksFreq(&rcc_clocks);
     System_Information();
-    Test_LED();
+    // Key_Test();
+    // Test_LED();
+    command_main();
+
 }

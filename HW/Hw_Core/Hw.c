@@ -12,4 +12,5 @@ HW_DEF void HW_Init(void)
     APB2Enable(IOPORT_B_ENABLE, ENABLE);
     USART1_Init();
     Led_Init();
+    Key_Init();
 }

@@ -25,9 +25,11 @@ SRC_HW = ../HW/Hw_Core/$(STARTUP_C)                      \
 		 ../HW/Hw_Core/Hw_SysTick.c                      \
 		 ../HW/Hw_Core/Hw_Usart.c                        \
 		 ../HW/Hw_Core/Hw_EXTI.c                         \
+		 ../HW/Hw_Core/Hw_TIM.c                          \
 		 ../HW/Hw_Core/Hw_IRQ.c                          \
 		 ../HW/Hw_Core/Hw_NVIC.c                         \
 		 ../HW/Hw_Lib/Hw_Led.c                           \
+		 ../HW/Hw_Lib/Hw_Key.c                           \
 		 
 
 
@@ -45,7 +47,7 @@ SRC_LIB = ../LIB/Ld_printf.c                          \
 
 #src menu c file
 SRC_MENU = ../Menu/menu_command.c                                 \
-           #../
+           ../Menu/Led_Command.c                                  \
 
 #source file 
 SRC =$(SRC_HW) $(SRC_LIB) $(SRC_MENU) $(SRC_AP)

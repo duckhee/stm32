@@ -243,3 +243,23 @@ bool do_test(struct _CMD_TBL *cptr, int argc, char **argv)
     printf("\nThis is test\n");
     return true;
 }
+
+bool do_led(struct _CMD_TBL *cptr, int argc, char **argv)
+{
+    printf("\nThis is led test\n");
+    command_led_main(argc, argv);
+    return true;
+}
+
+bool do_key(struct _CMD_TBL *cptr, int argc, char **argv)
+{
+    printf("\nThis is key test\n");
+    //command_key_main(argc, argv);
+    return true;
+}
+
+bool do_seg(struct _CMD_TBL *cptr, int argc, char **argv)
+{
+    printf("\nThis is seg test\n");
+    return true;
+}
