@@ -9,7 +9,7 @@
 #define GS1_DEF                  extern
 #endif
 
-GS1_DEF void Gs_Init(void);
+GS1_DEF void GS1_Init(void);
 
 
 #endif

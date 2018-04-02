@@ -72,5 +72,14 @@ HW_USART_DEF uint16_t USART_ReceiveData(USART_TypeDef* USARTx);
 HW_USART_DEF void USART_SendData(USART_TypeDef* USARTx, uint16_t Data);
 HW_USART_DEF FlagStatus USART_GetFlagStatus(USART_TypeDef* USARTx, uint16_t USART_FLAG);
 HW_USART_DEF void USART_Start_Cmd(USART_TypeDef* USARTx, FunctionalState NewStatue);
+//get usrat queue data
+HW_USART_DEF void USART_GetData(void);
+HW_USART_DEF void USART_PutData(uint16_t uData);
+HW_USART_DEF void USART_InitQueue(void);
+HW_USART_DEF void USART_AddQueue(uint16_t uData);
+HW_USART_DEF void USART_ProcessQueue(void);
+
+
+
 
 #endif
