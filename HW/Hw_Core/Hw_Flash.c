@@ -5,6 +5,20 @@
 HW_FLASH_DEF FLASH_Status FLASH_ProgramWord(uint32_t Address, uint32_t Data);
 HW_FLASH_DEF FLASH_Status FLASH_WaitForLastOperation(uint32_t Timeout);
 HW_FLASH_DEF FLASH_Status FLASH_GetBank1Status(void);
+HW_FLASH_DEF void FLASH_SetLatency(uint32_t FLASH_Latency);
+
+
+HW_FLASH_DEF void FLASH_SetLatency(uint32_t FLASH_Latency)
+{
+    uint32_t tmpreg = 0;
+    /* Read the ACR register */
+    tmpreg = FLASH->ACR;
+    /* Sets the latency vlaue */
+    tmpreg &= FLASH_ACR_LATENCY_Mask;
+    tmpreg |= FLASH_Latency;
+    /* Write the ACR register */
+    FLASH->ACR = tmpreg;
+}
 
 HW_FLASH_DEF FLASH_Status FLASH_ProgramWord(uint32_t Address, uint32_t Data)
 {

@@ -49,6 +49,16 @@
 #define USART_CR1_SET                        ((uint16_t)0x2000)
 #define USART_CR1_RESET                      ((uint16_t)0xDFFF)
 
+/* struct data buffer */
+#define USART_QUEUE_BUF_SIZE(2*2)
+#define USART_QUEUE_BUF_MASK(USART_QUEUE_BUF_SIZE - 1)
+
+typedef struct
+{
+    uint16_t uBuf[USART_QUEUE_BUF_SIZE];
+    uint16_t uHeadIndex;
+    uint16_t uTailIndex;
+} getUartQueue;
 
 #ifdef HW_USART_LOCAL
 #define HW_USART_DEF
