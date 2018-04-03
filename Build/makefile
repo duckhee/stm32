@@ -15,7 +15,7 @@ EXTRAINCDIRS = ../LIB               \
 			   ../AP/Ap_Core        \
 			   ../Menu              \
 			   ../Main              \
-			   #../AP/Ap_Lib         \
+			   ../AP/Ap_Lib         \
 
 #src hardware c file
 SRC_HW = ../HW/Hw_Core/$(STARTUP_C)                      \
@@ -28,8 +28,10 @@ SRC_HW = ../HW/Hw_Core/$(STARTUP_C)                      \
 		 ../HW/Hw_Core/Hw_TIM.c                          \
 		 ../HW/Hw_Core/Hw_IRQ.c                          \
 		 ../HW/Hw_Core/Hw_NVIC.c                         \
+		 ../HW/Hw_Core/Hw_ADC.c                          \
 		 ../HW/Hw_Lib/Hw_Led.c                           \
 		 ../HW/Hw_Lib/Hw_Key.c                           \
+		# ../HW/Hw_Core/Hw_DMA.c                          \
 		 
 
 
