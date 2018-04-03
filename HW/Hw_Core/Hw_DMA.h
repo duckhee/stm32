@@ -2,7 +2,7 @@
 #define __HW_DMA_H__
 
 
-
+#include "Hw.h"
 
 
 #ifdef HW_DMA_LOCAL

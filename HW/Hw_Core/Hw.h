@@ -16,7 +16,7 @@
 #include "Hw_NVIC.h"
 #include "Hw_TIM.h"
 #include "Hw_ADC.h"
-//#include "Hw_DMA.h"
+#include "Hw_DMA.h"
 
 
 //driver add
