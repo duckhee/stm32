@@ -10,6 +10,7 @@
 #endif
 
 GS1_DEF void Gs_Init(void);
+GS1_DEF void Gs_GetData(void);
 
 
 #endif
