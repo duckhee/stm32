@@ -10,8 +10,8 @@
 #endif
 
 /* struct data buffer */
-#define USART_QUEUE_BUF_SIZE(2*2)
-#define USART_QUEUE_BUF_MASK(USART_QUEUE_BUF_SIZE - 1)
+#define USART_QUEUE_BUF_SIZE 100//(2*2)
+#define USART_QUEUE_BUF_MASK 99//(USART_QUEUE_BUF_SIZE-1)
 
 typedef struct
 {

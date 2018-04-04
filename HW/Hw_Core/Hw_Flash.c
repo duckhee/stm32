@@ -192,9 +192,23 @@ HW_FLASH_DEF FLASH_Status FLASH_EraseOptionBytes(void)
             /* if the erase operation is completed, disable the OPTER Bit */
             FLASH->CR &= FLASH_CR_OPTER_Reset;
             /* Enable the Option Bytes Programming operation */
-            FLASH->CR |= FLASH_CR_OPTER_Set;
+            FLASH->CR |= FLASH_CR_OPTPG_Set;
             /* Restore the last read protection Option Byte value */
+            OB->RDP = (uint16_t)rdptmp;
+            /* Wait for last operation to be completed */
+            status = FLASH_WaitForLastOperation(ProgramTimeout);
+
+            if(status != FLASH_TIMEOUT)
+            {
+                FLASH->CR &= FLASH_CR_OPTPG_Reset;
+            }
+        }else{
+            if(status != FLASH_TIMEOUT)
+            {
+                FLASH->CR &= FLASH_CR_OPTPG_Reset;
+            }
         }
     }
-
+    /* Return the erase status */
+    return status;
 }
