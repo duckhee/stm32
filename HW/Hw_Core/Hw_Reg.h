@@ -6,6 +6,11 @@
 #define     __I     volatile                  /*!< defines 'read only' permissions      */
 #define     __O     volatile                  /*!< defines 'write only' permissions     */
 #define     __IO    volatile                  /*!< defines 'read / write' permissions   */
+// Private define ----------------------------------------------------------------------------------------
+#define WEAK __attribute__ ((weak))
+#define __INLINE         inline                                     /*!< inline keyword for GNU Compiler       */
+#define __ASM            __asm                                      /*!< asm keyword for GNU Compiler          */
+static __INLINE void __DSB()                      { __ASM volatile ("dsb"); }
 
 typedef enum
 {

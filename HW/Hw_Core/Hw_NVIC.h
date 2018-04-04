@@ -33,6 +33,8 @@
 #define HW_NVIC_DEF                        extern
 #endif
 
+//static __GNUC_GNU_INLINE__ void NVIC_SystemReset(void);
+
 HW_NVIC_DEF void NVIC_PriorityGroupConfig(uint32_t NVIC_PriorityGroup);
 HW_NVIC_DEF void NVIC_SetVectorTable(uint32_t NVIC_VectTab, uint32_t Offset);
 HW_NVIC_DEF void NVIC_Configuration(void);

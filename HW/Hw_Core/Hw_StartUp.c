@@ -2,7 +2,7 @@
 
 typedef void (*const intfunc)(void);
 // Private define ----------------------------------------------------------------------------------------
-#define WEAK __attribute__ ((weak))
+//#define WEAK __attribute__ ((weak))
 
 
 //-- init value for the stack pointer. defined in linker script 
