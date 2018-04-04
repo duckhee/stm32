@@ -13,6 +13,7 @@ HW_NVIC_DEF void NVIC_SetVectorTable(uint32_t NVIC_VectTab, uint32_t Offset)
     SCB->VTOR = NVIC_VectTab | (Offset & (uint32_t)0x1FFFFF80);
 }
 
+
 HW_NVIC_DEF void NVIC_Configuration(void)
 {
     NVIC_InitTypeDef NVIC_InitStructure;
