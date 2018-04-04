@@ -49,16 +49,6 @@
 #define USART_CR1_SET                        ((uint16_t)0x2000)
 #define USART_CR1_RESET                      ((uint16_t)0xDFFF)
 
-/* struct data buffer */
-#define USART_QUEUE_BUF_SIZE(2*2)
-#define USART_QUEUE_BUF_MASK(USART_QUEUE_BUF_SIZE - 1)
-
-typedef struct
-{
-    uint16_t uBuf[USART_QUEUE_BUF_SIZE];
-    uint16_t uHeadIndex;
-    uint16_t uTailIndex;
-} getUartQueue;
 
 #ifdef HW_USART_LOCAL
 #define HW_USART_DEF
@@ -72,14 +62,6 @@ HW_USART_DEF uint16_t USART_ReceiveData(USART_TypeDef* USARTx);
 HW_USART_DEF void USART_SendData(USART_TypeDef* USARTx, uint16_t Data);
 HW_USART_DEF FlagStatus USART_GetFlagStatus(USART_TypeDef* USARTx, uint16_t USART_FLAG);
 HW_USART_DEF void USART_Start_Cmd(USART_TypeDef* USARTx, FunctionalState NewStatue);
-//get usrat queue data
-HW_USART_DEF void USART_GetData(void);
-HW_USART_DEF void USART_PutData(uint16_t uData);
-HW_USART_DEF void USART_InitQueue(void);
-HW_USART_DEF void USART_AddQueue(uint16_t uData);
-HW_USART_DEF void USART_ProcessQueue(void);
-
-
 
 
 #endif

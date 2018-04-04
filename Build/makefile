@@ -15,7 +15,7 @@ EXTRAINCDIRS = ../LIB               \
 			   ../AP/Ap_Core        \
 			   ../Menu              \
 			   ../Main              \
-			   #../AP/Ap_Lib         \
+			   ../AP/Ap_Lib         \
 
 #src hardware c file
 SRC_HW = ../HW/Hw_Core/$(STARTUP_C)                      \

@@ -2,11 +2,28 @@
 
 #include "Hw_Flash.h"
 
+HW_FLASH_DEF void FLASH_Unlock(void);
+HW_FLASH_DEF void FLASH_Lock(void);
 HW_FLASH_DEF FLASH_Status FLASH_ProgramWord(uint32_t Address, uint32_t Data);
 HW_FLASH_DEF FLASH_Status FLASH_WaitForLastOperation(uint32_t Timeout);
 HW_FLASH_DEF FLASH_Status FLASH_GetBank1Status(void);
 HW_FLASH_DEF void FLASH_SetLatency(uint32_t FLASH_Latency);
+HW_FLASH_DEF FLASH_Status FLASH_ErasePage(uint32_t Page_Address);
+HW_FLASH_DEF FLASH_Status FLASH_EraseAllPage(void);
+HW_FLASH_DEF FLASH_Status FLASH_EraseOptionBytes(void);
 
+HW_FLASH_DEF void FLASH_Unlock(void)
+{
+    /* Authorize the FPEC of Bank1 Access */
+    FLASH->KEYR = FLASH_KEY1;
+    FLASH->KEYR = FLASH_KEY2;
+}
+
+HW_FLASH_DEF void FLASH_Lock(void)
+{
+    /* Set the Lock Bit to lock the FPEC and the CR of  Bank1 */
+    FLASH->CR |= FLASH_CR_LOCK_Set;
+}
 
 HW_FLASH_DEF void FLASH_SetLatency(uint32_t FLASH_Latency)
 {
@@ -99,4 +116,85 @@ HW_FLASH_DEF FLASH_Status FLASH_GetBank1Status(void)
     }
     /* Return the Flash Status */
     return flashstatus;
+}
+
+HW_FLASH_DEF FLASH_Status FLASH_ErasePage(uint32_t Page_Address)
+{
+    FLASH_Status status = FLASH_COMPLETE;
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation(EraseTimeout);
+
+    if(status == FLASH_COMPLETE)
+    {
+        /* if the previous operation is completed, proceed to erase the page */
+        FLASH->CR |= FLASH_CR_PER_Set;
+        FLASH->AR = Page_Address;
+        FLASH->CR |= FLASH_CR_STRT_Set;
+        /* Wait for last operation to be completed */
+        status = FLASH_WaitForLastOperation(EraseTimeout);
+        if(status != FLASH_TIMEOUT)
+        {
+            /* Disable the PER Bit */
+            FLASH->CR &= FLASH_CR_PER_Reset;0
+        }
+    }
+    /* Return the Erase Status */
+    return status;
+}
+
+HW_FLASH_DEF FLASH_Status FLASH_EraseAllPage(void)
+{
+    FLASH_Status status = FLASH_COMPLETE;
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation(EraseTimeout);
+
+    if(status == FLASH_COMPLETE)
+    {
+        /* if the previous operation is completed, proceed to erase all pages */
+        FLASH->CR |= FLASH_CR_MER_Set;
+        FLASH->CR |= FLASH_CR_STRT_Set;
+        /* Wait for last operation to be completed */
+        status = FLASH_WaitForLastOperation(EraseTimeout);
+        if(status != FLASH_TIMEOUT)
+        {
+            /* Disable the MER Bit */
+            FLASH->CR &= FLASH_CR_MER_Reset;
+        }
+    }
+    /* Return the Erase Status */
+    return status;
+}
+
+HW_FLASH_DEF FLASH_Status FLASH_EraseOptionBytes(void)
+{
+    uint16_t rdptmp = RDPRT_KEY;
+    FLASH_Status status = FLASH_COMPLETE;
+    /* Get the actual read protection Option Byte value */
+    if(FLASH_GetReadOutProtectionStatus() != RESET)
+    {
+        rdptmp = 0x00;
+    }
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation(EraseTimeout);
+    if(status == FLASH_COMPLETE)
+    {
+        /* Authorize the small information block programming */
+        FALSH->OPTKEYR = FLASH_KEY1;
+        FLASH->OPTKEYR = FLASH_KEY2;
+        /* if the previous operation is completed, proceed to erase the option bytes */
+        FLASH->CR |= FLASH_CR_OPTER_Set;
+        FLASH->CR |= FLASH_CR_STRT_Set;
+        /* Wait for last operation to be completed */
+        status = FLASH_WaitForLastOperation(EraseTimeout);
+
+        if(status == FLASH_COMPLETE)
+        {
+            /* if the erase operation is completed, disable the OPTER Bit */
+            FLASH->CR &= FLASH_CR_OPTER_Reset;
+            /* Enable the Option Bytes Programming operation */
+            FLASH->CR |= FLASH_CR_OPTER_Set;
+            /* Restore the last read protection Option Byte value */
+        }
+    }
+
 }

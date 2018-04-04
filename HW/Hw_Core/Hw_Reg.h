@@ -51,6 +51,7 @@ typedef enum
 #define EXTI_BASE             (APB2PERIPH_BASE + 0x0400)
 #define RCC_BASE              (AHBPERIPH_BASE + 0x1000)
 #define FLASH_R_BASE          (AHBPERIPH_BASE + 0x2000) /*!< Flash registers base address */
+#define OB_BASE               ((uint32_t)0x1FFFF800)    /*!< Flash Option Bytes base address */
 #define GPIOA_BASE            (APB2PERIPH_BASE + 0x0800)
 #define GPIOB_BASE            (APB2PERIPH_BASE + 0x0C00)
 #define GPIOC_BASE            (APB2PERIPH_BASE + 0x1000)
@@ -109,6 +110,21 @@ typedef struct
     __IO uint32_t WRPR;
 }FLASH_TypeDef;
 //flash struct
+/**
+  * @brief Option Bytes Registers
+  */
+
+typedef struct
+{
+  __IO uint16_t RDP;
+  __IO uint16_t USER;
+  __IO uint16_t Data0;
+  __IO uint16_t Data1;
+  __IO uint16_t WRP0;
+  __IO uint16_t WRP1;
+  __IO uint16_t WRP2;
+  __IO uint16_t WRP3;
+} OB_TypeDef;
 
 
 typedef struct
@@ -706,6 +722,7 @@ typedef struct
 #define RCC                 ((RCC_TypeDef *) RCC_BASE)
 //flash config
 #define FLASH               ((FLASH_TypeDef *) FLASH_R_BASE)
+#define OB                  ((OB_TypeDef *) OB_BASE)
 //gpioo config
 #define GPIOA               ((GPIO_TypeDef *) GPIOA_BASE)
 #define GPIOB               ((GPIO_TypeDef *) GPIOB_BASE)
