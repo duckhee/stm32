@@ -11,6 +11,7 @@ HW_FLASH_DEF void FLASH_SetLatency(uint32_t FLASH_Latency);
 HW_FLASH_DEF FLASH_Status FLASH_ErasePage(uint32_t Page_Address);
 HW_FLASH_DEF FLASH_Status FLASH_EraseAllPage(void);
 HW_FLASH_DEF FLASH_Status FLASH_EraseOptionBytes(void);
+HW_FLASH_DEF FLASH_Status FLASH_EnableWriteProtection(uint32_t FLASH_Pages);
 
 HW_FLASH_DEF void FLASH_Unlock(void)
 {
@@ -210,5 +211,60 @@ HW_FLASH_DEF FLASH_Status FLASH_EraseOptionBytes(void)
         }
     }
     /* Return the erase status */
+    return status;
+}
+
+HW_FLASH_DEF FLASH_Status FLASH_EnableWriteProtection(uint32_t FLASH_Pages)
+{
+    uint16_t WRP0_Data = 0xFFFF, WRP1_Data = 0xFFFF, WRP2_Data = 0xFFFF, WPR3_Data = 0xFFFF;
+
+    FLASH_Status status = FLASH_COMPLETE;
+
+    FLASH_Pages = (uint32_t)(~FLASH_Pages);
+    WRP0_Data = (uint16_t)(FLASH_Pages & FLASH_WRP0_Mask);
+    WRP1_Data = (uint16_t)((FLASH_Pages & FLASH_WRP1_Mask) >> 8);
+    WRP2_Data = (uint16_t)((FLASH_Pages & FLASH_WRP2_Mask) >> 16);
+    WPR3_Data = (uint16_t)((FLASH_Pages & FLASH_WRP3_Mask) >> 24);
+
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation(ProgramTimeout);
+
+    if(status == FLASH_COMPLETE)
+    {
+        /* Authorizes the small information block programming */
+        FLASH->OPTKEYR = FLASH_KEY1;
+        FLASH->OPTKEYR = FLASH_KEY2;
+        FLAH->CR |= FLASH_CR_OPTPG_Set;
+        if(WRP0_Data != 0xFF)
+        {
+            OB->WRP0 = WRP0_Data;
+            /* Wait for last operation to be completed */
+            status = FLASH_WaitForLastOperation(ProgramTimeout);
+        }
+        if((status == FLASH_COMPLETE) && (WRP1_Data != 0xFF))
+        {
+            OB->WRP1 = WRP1_Data;
+            /* Wait for last operation to be completed */
+            status = FLASH_WaitForLastOperation(ProgramTimeout);
+        }
+        if((status == FLASH_COMPLETE) && (WRP2_Data != 0xFF))
+        {
+            OB->WRP2 = WRP2_Data;
+            /* Wait for last operation to be completed */
+            status = FLASH_WaitForLastOperation(ProgramTimeout);
+        }
+        if((status == FLASH_COMPLETE) && (WPR3_Data != 0xFF))
+        {
+            OB->WRP3 = WPR3_Data;
+            /* Wait for last operation to be completed */
+            status = FLASH_WaitForLastOperation(ProgramTimeout);
+        }
+        if(status != FLASH_COMPLETE)
+        {
+            /* if the program operation is completed, disable the OPTPG Bit */
+            FLASH->CR &= FLASH_CR_OPTPG_Reset;
+        }
+    }
+    /* Return the write protection operation Status */
     return status;
 }

@@ -3,6 +3,17 @@
 
 #include "Hw.h"
 
+
+
+/* FLASH Mask */
+#define FLASH_RDPRT_Mask               ((uint32_t)0x00000002)
+#define FLASH_WRP0_Mask                ((uint32_t)0x000000FF)
+#define FLASH_WRP1_Mask                ((uint32_t)0x0000FF00)
+#define FLASH_WRP2_Mask                ((uint32_t)0x00FF0000)
+#define FLASH_WRP3_Mask                ((uint32_t)0xFF000000)
+#define FLASH_OB_USER_BFB2             ((uint16_t)0x0008)
+
+/* FLASH Keys */
 #define RDPRT_KEY                  ((uint16_t)0x00A5)
 #define FLASH_KEY1               ((uint32_t)0x45670123)
 #define FLASH_KEY2               ((uint32_t)0xCDEF89AB)
@@ -171,6 +182,8 @@ HW_FLASH_DEF void FLASH_SetLatency(uint32_t FLASH_Latency);
 HW_FLASH_DEF FLASH_Status FLASH_ErasePage(uint32_t Page_Address);
 HW_FLASH_DEF FLASH_Status FLASH_EraseAllPage(void);
 HW_FLASH_DEF FLASH_Status FLASH_EraseOptionBytes(void);
+HW_FLASH_DEF FLASH_Status FLASH_EnableWriteProtection(uint32_t FLASH_Pages);
+
 
 
 #endif
