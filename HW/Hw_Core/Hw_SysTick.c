@@ -21,5 +21,8 @@ HW_SYSTICK_DEF uint32_t SysTick_Config(uint32_t ticks)
 
 HW_SYSTICK_DEF void SysTick_Handler(void)
 {
-    
+    count_sys++;
+    if(count_sys == 100){
+        count_sys = 0;
+    }
 }

@@ -3,6 +3,10 @@
 
 #include "Hw.h"
 
+//lib ap core
 #include "Get_SysClock.h"
+
+//lib ap lib
+#include "gs1.h"
 
 #endif
