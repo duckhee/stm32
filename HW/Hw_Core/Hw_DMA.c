@@ -3,8 +3,6 @@
 #include "Hw_DMA.h"
 
 
-<<<<<<< HEAD
-=======
 HW_DMA_DEF void DMA_Start_Cmd(DMA_Channel_TypeDef* DMAy_Channelx, FunctionalState NewState);
 HW_DMA_DEF void DMA_Init(DMA_Channel_TypeDef* DMAy_Channelx, DMA_InitTypeDef* DMA_InitStruct);
 HW_DMA_DEF void DMA_DeInit(DMA_Channel_TypeDef* DMAy_Channelx);
@@ -141,4 +139,3 @@ HW_DMA_DEF void DMA_DeInit(DMA_Channel_TypeDef* DMAy_Channelx)
   }
 }
 
->>>>>>> merge_branch
