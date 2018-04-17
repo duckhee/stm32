@@ -17,7 +17,7 @@
 #include "Hw_TIM.h"
 #include "Hw_ADC.h"
 #include "Hw_DMA.h"
-
+#include "Hw_SPI.h"
 
 //driver add
 #include "Hw_Led.h"

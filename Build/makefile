@@ -32,6 +32,7 @@ SRC_HW = ../HW/Hw_Core/$(STARTUP_C)                      \
 		 ../HW/Hw_Lib/Hw_Led.c                           \
 		 ../HW/Hw_Lib/Hw_Key.c                           \
 		 ../HW/Hw_Core/Hw_DMA.c                          \
+		 ../HW/Hw_Core/Hw_SPI.c                          \
 		 
 
 
