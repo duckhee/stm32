@@ -40,6 +40,7 @@ SRC_HW = ../HW/Hw_Core/$(STARTUP_C)                      \
 #src aplication c file
 SRC_AP = ../Main/main.c                                  \
          ../AP/Ap_Core/Get_SysClock.c                    \
+		 ../Ap/Ap_Core/Queue.c                           \
          #../AP
 
 

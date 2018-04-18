@@ -9,4 +9,7 @@
 //lib ap lib
 #include "gs1.h"
 
+//buffer
+#include "Queue.h"
+
 #endif
