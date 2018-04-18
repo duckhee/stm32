@@ -8,6 +8,7 @@ HW_USART_DEF uint16_t USART_ReceiveData(USART_TypeDef* USARTx);
 HW_USART_DEF void USART_SendData(USART_TypeDef* USARTx, uint16_t Data);
 HW_USART_DEF FlagStatus USART_GetFlagStatus(USART_TypeDef* USARTx, uint16_t USART_FLAG);
 HW_USART_DEF void USART_Start_Cmd(USART_TypeDef* USARTx, FunctionalState NewStatue);
+HW_USART_DEF void USART_ClearITPendingBit(USART_TypeDef* USARTx, uint16_t USART_IT);
 
 HW_USART_DEF void USART1_Init(void)
 {
@@ -59,7 +60,7 @@ HW_USART_DEF void USART_Init(USART_TypeDef* USARTx, USART_InitTypeDef* USART_Ini
  /* The hardware flow control is available only for USART1, USART2 and USART3 */
   if (USART_InitStruct->USART_HardwareFlowControl != USART_HardwareFlowControl_None)
   {
-    
+    //assert param debug code here
   }
 
   usartxbase = (uint32_t)USARTx;
@@ -178,4 +179,45 @@ HW_USART_DEF void USART_Start_Cmd(USART_TypeDef* USARTx, FunctionalState NewStat
   {
     USARTx->CR1 &= USART_CR1_RESET;
   }
+}
+
+/**
+  * @brief  Clears the USARTx's interrupt pending bits.
+  * @param  USARTx: Select the USART or the UART peripheral.
+  *   This parameter can be one of the following values:
+  *   USART1, USART2, USART3, UART4 or UART5.
+  * @param  USART_IT: specifies the interrupt pending bit to clear.
+  *   This parameter can be one of the following values:
+  *     @arg USART_IT_CTS:  CTS change interrupt (not available for UART4 and UART5)
+  *     @arg USART_IT_LBD:  LIN Break detection interrupt
+  *     @arg USART_IT_TC:   Transmission complete interrupt.
+  *     @arg USART_IT_RXNE: Receive Data register not empty interrupt.
+  *
+  * @note
+  *   - PE (Parity error), FE (Framing error), NE (Noise error), ORE (OverRun
+  *     error) and IDLE (Idle line detected) pending bits are cleared by
+  *     software sequence: a read operation to USART_SR register
+  *     (USART_GetITStatus()) followed by a read operation to USART_DR register
+  *     (USART_ReceiveData()).
+  *   - RXNE pending bit can be also cleared by a read to the USART_DR register
+  *     (USART_ReceiveData()).
+  *   - TC pending bit can be also cleared by software sequence: a read
+  *     operation to USART_SR register (USART_GetITStatus()) followed by a write
+  *     operation to USART_DR register (USART_SendData()).
+  *   - TXE pending bit is cleared only by a write to the USART_DR register
+  *     (USART_SendData()).
+  * @retval None
+  */
+ HW_USART_DEF void USART_ClearITPendingBit(USART_TypeDef* USARTx, uint16_t USART_IT)
+{
+  uint16_t bitpos = 0x00, itmask = 0x00;
+  /* The CTS interrupt is not available for UART4 and UART5 */
+  if (USART_IT == USART_IT_CTS)
+  {
+    assert_param(IS_USART_123_PERIPH(USARTx));
+  }
+
+  bitpos = USART_IT >> 0x08;
+  itmask = ((uint16_t)0x01 << (uint16_t)bitpos);
+  USARTx->SR = (uint16_t)~itmask;
 }

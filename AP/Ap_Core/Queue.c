@@ -10,7 +10,7 @@ uint32_t u3_rx_point_tail = 0;
 QUEUE_DEF void Uart3_EnQueue(uint16_t);
 QUEUE_DEF void u3_increase_point_value(uint32_t *);
 QUEUE_DEF uint16_t Uart3_DeQueue(void);
-QUEUE_DEF bool Uart3_Is_Empty(void);
+QUEUE_DEF BitAction Uart3_Is_Empty(void);
 
 //save data queue
 QUEUE_DEF void Uart3_EnQueue(uint16_t data)
@@ -38,11 +38,11 @@ QUEUE_DEF uint16_t Uart3_DeQueue(void)
 }
 
 //flag check empty
-QUEUE_DEF bool Uart3_Is_Empty(void)
+QUEUE_DEF BitAction Uart3_Is_Empty(void)
 {
     if(u3_rx_point_head == u3_rx_point_tail)
     {
-        return TRUE;
+        return SET;
     }
-    return FALSE;
+    return RESET;
 }

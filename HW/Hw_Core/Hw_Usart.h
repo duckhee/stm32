@@ -49,6 +49,37 @@
 #define USART_CR1_SET                        ((uint16_t)0x2000)
 #define USART_CR1_RESET                      ((uint16_t)0xDFFF)
 
+/**
+  * @}
+  */
+
+/** @defgroup USART_Interrupt_definition
+  * @{
+  */
+
+#define USART_IT_PE                          ((uint16_t)0x0028)
+#define USART_IT_TXE                         ((uint16_t)0x0727)
+#define USART_IT_TC                          ((uint16_t)0x0626)
+#define USART_IT_RXNE                        ((uint16_t)0x0525)
+#define USART_IT_IDLE                        ((uint16_t)0x0424)
+#define USART_IT_LBD                         ((uint16_t)0x0846)
+#define USART_IT_CTS                         ((uint16_t)0x096A)
+#define USART_IT_ERR                         ((uint16_t)0x0060)
+#define USART_IT_ORE                         ((uint16_t)0x0360)
+#define USART_IT_NE                          ((uint16_t)0x0260)
+#define USART_IT_FE                          ((uint16_t)0x0160)
+
+#define IS_USART_CONFIG_IT(IT) (((IT) == USART_IT_PE) || ((IT) == USART_IT_TXE) || \
+                               ((IT) == USART_IT_TC) || ((IT) == USART_IT_RXNE) || \
+                               ((IT) == USART_IT_IDLE) || ((IT) == USART_IT_LBD) || \
+                               ((IT) == USART_IT_CTS) || ((IT) == USART_IT_ERR))
+#define IS_USART_GET_IT(IT) (((IT) == USART_IT_PE) || ((IT) == USART_IT_TXE) || \
+                            ((IT) == USART_IT_TC) || ((IT) == USART_IT_RXNE) || \
+                            ((IT) == USART_IT_IDLE) || ((IT) == USART_IT_LBD) || \
+                            ((IT) == USART_IT_CTS) || ((IT) == USART_IT_ORE) || \
+                            ((IT) == USART_IT_NE) || ((IT) == USART_IT_FE))
+#define IS_USART_CLEAR_IT(IT) (((IT) == USART_IT_TC) || ((IT) == USART_IT_RXNE) || \
+                               ((IT) == USART_IT_LBD) || ((IT) == USART_IT_CTS))
 
 #ifdef HW_USART_LOCAL
 #define HW_USART_DEF
@@ -62,6 +93,6 @@ HW_USART_DEF uint16_t USART_ReceiveData(USART_TypeDef* USARTx);
 HW_USART_DEF void USART_SendData(USART_TypeDef* USARTx, uint16_t Data);
 HW_USART_DEF FlagStatus USART_GetFlagStatus(USART_TypeDef* USARTx, uint16_t USART_FLAG);
 HW_USART_DEF void USART_Start_Cmd(USART_TypeDef* USARTx, FunctionalState NewStatue);
-
+HW_USART_DEF void USART_ClearITPendingBit(USART_TypeDef* USARTx, uint16_t USART_IT);
 
 #endif

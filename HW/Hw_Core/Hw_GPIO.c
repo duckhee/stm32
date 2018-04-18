@@ -8,7 +8,17 @@ HW_GPIO_DEF void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruc
 HW_GPIO_DEF void GPIO_Configuratioin(void);
 HW_GPIO_DEF void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal);
 HW_GPIO_DEF uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+HW_GPIO_DEF void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 
+
+/**
+  * @brief  Initializes the GPIOx peripheral according to the specified
+  *         parameters in the GPIO_InitStruct.
+  * @param  GPIOx: where x can be (A..G) to select the GPIO peripheral.
+  * @param  GPIO_InitStruct: pointer to a GPIO_InitTypeDef structure that
+  *         contains the configuration information for the specified GPIO peripheral.
+  * @retval None
+  */
 HW_GPIO_DEF void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct)
 {
     uint32_t currentmode = 0x00, currentpin = 0x00, pinpos = 0x00, pos = 0x00;
@@ -89,6 +99,11 @@ HW_GPIO_DEF void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruc
   }
 }
 
+/**
+  * @brief  Reads the specified GPIO input data port.
+  * @param  GPIOx: where x can be (A..G) to select the GPIO peripheral.
+  * @retval GPIO input data port value.
+  */
 HW_GPIO_DEF uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
     uint8_t bitStatus = 0x00;
@@ -102,7 +117,13 @@ HW_GPIO_DEF uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin
     }
     return bitStatus;
 }
-
+/**
+  * @brief  Reads the specified output data port bit.
+  * @param  GPIOx: where x can be (A..G) to select the GPIO peripheral.
+  * @param  GPIO_Pin:  specifies the port bit to read.
+  *   This parameter can be GPIO_Pin_x where x can be (0..15).
+  * @retval The output port pin value.
+  */
 HW_GPIO_DEF uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
     uint8_t bitstatus = 0x00;
@@ -118,6 +139,27 @@ HW_GPIO_DEF uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pi
     return bitstatus;
 }
 
+/**
+  * @brief  Writes data to the specified GPIO data port.
+  * @param  GPIOx: where x can be (A..G) to select the GPIO peripheral.
+  * @param  PortVal: specifies the value to be written to the port output data register.
+  * @retval None
+  */
+HW_GPIO_DEF void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal)
+{
+    GPIOx->ODR = PortVal;
+}
+/**
+  * @brief  Sets or clears the selected data port bit.
+  * @param  GPIOx: where x can be (A..G) to select the GPIO peripheral.
+  * @param  GPIO_Pin: specifies the port bit to be written.
+  *   This parameter can be one of GPIO_Pin_x where x can be (0..15).
+  * @param  BitVal: specifies the value to be written to the selected bit.
+  *   This parameter can be one of the BitAction enum values:
+  *     @arg Bit_RESET: to clear the port pin
+  *     @arg Bit_SET: to set the port pin
+  * @retval None
+  */
 HW_GPIO_DEF void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal)
 {
     if(BitVal != Bit_RESET)
@@ -129,6 +171,34 @@ HW_GPIO_DEF void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction
         GPIOx->BRR = GPIO_Pin;
     }
 }
+
+/**
+  * @brief  Sets the selected data port bits.
+  * @param  GPIOx: where x can be (A..G) to select the GPIO peripheral.
+  * @param  GPIO_Pin: specifies the port bits to be written.
+  *   This parameter can be any combination of GPIO_Pin_x where x can be (0..15).
+  * @retval None
+  */
+HW_GPIO_DEF void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+{
+    GPIOx->BSRR = GPIO_Pin;
+}
+
+/**
+  * @brief  Clears the selected data port bits.
+  * @param  GPIOx: where x can be (A..G) to select the GPIO peripheral.
+  * @param  GPIO_Pin: specifies the port bits to be written.
+  *   This parameter can be any combination of GPIO_Pin_x where x can be (0..15).
+  * @retval None
+  */
+HW_GPIO_DEF void GPIO_ResetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+{
+    GPIOx->BRR = GPIO_Pin;
+}
+
+
+
+
 
 HW_GPIO_DEF void GPIO_Configuratioin(void)
 {

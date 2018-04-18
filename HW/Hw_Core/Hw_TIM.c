@@ -55,12 +55,43 @@ HW_TIM_DEF void TIM_Configuration(void)
     
 }
 
+/**
+  * @brief  Clears the TIMx's interrupt pending bits.
+  * @param  TIMx: where x can be 1 to 17 to select the TIM peripheral.
+  * @param  TIM_IT: specifies the pending bit to clear.
+  *   This parameter can be any combination of the following values:
+  *     @arg TIM_IT_Update: TIM1 update Interrupt source
+  *     @arg TIM_IT_CC1: TIM Capture Compare 1 Interrupt source
+  *     @arg TIM_IT_CC2: TIM Capture Compare 2 Interrupt source
+  *     @arg TIM_IT_CC3: TIM Capture Compare 3 Interrupt source
+  *     @arg TIM_IT_CC4: TIM Capture Compare 4 Interrupt source
+  *     @arg TIM_IT_COM: TIM Commutation Interrupt source
+  *     @arg TIM_IT_Trigger: TIM Trigger Interrupt source
+  *     @arg TIM_IT_Break: TIM Break Interrupt source
+  * @note
+  *   - TIM6 and TIM7 can generate only an update interrupt.
+  *   - TIM9, TIM12 and TIM15 can have only TIM_IT_Update, TIM_IT_CC1,
+  *      TIM_IT_CC2 or TIM_IT_Trigger.
+  *   - TIM10, TIM11, TIM13, TIM14, TIM16 and TIM17 can have TIM_IT_Update or TIM_IT_CC1.
+  *   - TIM_IT_Break is used only with TIM1, TIM8 and TIM15.
+  *   - TIM_IT_COM is used only with TIM1, TIM8, TIM15, TIM16 and TIM17.
+  * @retval None
+  */
 HW_TIM_DEF void TIM_ClearITPendingBit(TIM_TypeDef* TIMx, uint16_t TIM_IT)
 {
     /* Clear the IT pending Bit */
     TIMx->SR = (uint16_t)~TIM_IT;
 }
 
+/**
+  * @brief  Initializes the TIMx Time Base Unit peripheral according to
+  *         the specified parameters in the TIM_TimeBaseInitStruct.
+  * @param  TIMx: where x can be 1 to 17 to select the TIM peripheral.
+  * @param  TIM_TimeBaseInitStruct: pointer to a TIM_TimeBaseInitTypeDef
+  *         structure that contains the configuration information for the
+  *         specified TIM peripheral.
+  * @retval None
+  */
 HW_TIM_DEF void TIM_TimeBaseInit(TIM_TypeDef* TIMx, TIM_TimeBaseInitTypeDef* TIM_TimeBaseInitStruct)
 {
     TIMx->CR1 &= TIM_CR1_CKD_Mask & TIM_CR1_CounterMode_Mask;
@@ -79,6 +110,23 @@ HW_TIM_DEF void TIM_TimeBaseInit(TIM_TypeDef* TIMx, TIM_TimeBaseInitTypeDef* TIM
 
 }
 
+/**
+  * @brief  Fills each TIM_TimeBaseInitStruct member with its default value.
+  * @param  TIM_TimeBaseInitStruct : pointer to a TIM_TimeBaseInitTypeDef
+  *         structure which will be initialized.
+  * @retval None
+  */
+HW_TIM_DEF void TIM_TimeBaseStructInit(TIM_TimeBaseInitTypeDef* TIM_TimeBaseInitStruct)
+{
+  /* Set the default configuration */
+  TIM_TimeBaseInitStruct->TIM_Period = 0xFFFF;
+  TIM_TimeBaseInitStruct->TIM_Prescaler = 0x0000;
+  TIM_TimeBaseInitStruct->TIM_ClockDivision = TIM_CKD_DIV1;
+  TIM_TimeBaseInitStruct->TIM_CounterMode = TIM_CounterMode_Up;
+  TIM_TimeBaseInitStruct->TIM_RepetitionCounter = 0x0000;
+}
+
+
 HW_TIM_DEF void TIM_Start_Cmd(TIM_TypeDef* TIMx, FunctionalState NewState)
 {
     if (NewState != DISABLE)
@@ -89,7 +137,7 @@ HW_TIM_DEF void TIM_Start_Cmd(TIM_TypeDef* TIMx, FunctionalState NewState)
     else
     {
         /* Disable the TIM Counter */
-        TIMx->CR1 &= TIM_CR1_CEN_Reset;
+        TIMx->CR1 &= (uint16_t)(~((uint16_t)TIM_CR1_CEN_Set));
     }
 }
 
