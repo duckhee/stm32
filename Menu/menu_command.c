@@ -35,6 +35,7 @@ struct _CMD_TBL{
 
 //초기화
 #define CMD_TBL_TEST                  {"test",      do_test, 0, 0, 0}
+#define CMD_TBL_HELP                  {"help",      do_print_help, 0, 0, 0}
 //메뉴 정의 
 #define CMD_TBL_LED                   {"led_menu",  do_led,  0, 0, 0}
 #define CMD_TBL_KEY                   {"key_menu",  do_key,  0, 0, 0}
@@ -61,6 +62,7 @@ bool do_seg(struct _CMD_TBL *cptr, int argc, char **argv);
 struct _CMD_TBL cmd_tbl[] =
 {
     CMD_TBL_TEST,
+    CMD_TBL_HELP,
     //추가 시작
     CMD_TBL_LED,
     CMD_TBL_KEY,
