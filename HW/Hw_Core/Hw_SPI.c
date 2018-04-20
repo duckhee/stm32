@@ -34,7 +34,7 @@ SPI_DEF void SPI_I2S_SendData(SPI_TypeDef* SPIx, uint16_t Data)
   */
 SPI_DEF uint16_t SPI_I2S_ReceiveData(SPI_TypeDef* SPIx)
 {
-    return Spix->DR;
+    return SPIx->DR;
 }
 
 /**
@@ -113,9 +113,9 @@ SPI_DEF ITStatus SPI_I2S_GetITStatus(SPI_TypeDef* SPIx, uint8_t SPI_I2S_IT)
     /* Get the SPI/I2S IT index */
     itpos = 0x01 << (SPI_I2S_IT & 0x0F);
     /* Get the SPI/I2S IT mask */
-    itmaks = SPI_I2S_IT >> 4;
+    itmask = SPI_I2S_IT >> 4;
     /* Set the IT mask */
-    itmaks = 0x1 << itmask;
+    itmask = 0x1 << itmask;
     /* Get the SPI_I2S_IT enable bit status */
     enableStatus = (SPIx->CR2 & itmask);
     /* Check the status of the specified SPI/I2S interrupt */
