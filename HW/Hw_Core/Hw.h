@@ -22,6 +22,7 @@
 //driver add
 #include "Hw_Led.h"
 #include "Hw_Key.h"
+#include "Hw_Segment.h"
 //lib add
 #include "Ld_printf.h"
 #include "Util.h"
