@@ -53,11 +53,13 @@
 #endif
 
 HW_GPIO_DEF uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+HW_GPIO_DEF uint16_t GPIO_ReadInputData(GPIO_TypeDef* GPIOx);
 HW_GPIO_DEF void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct);
 HW_GPIO_DEF void GPIO_Configuratioin(void);
 HW_GPIO_DEF void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal);
 HW_GPIO_DEF void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal);
 HW_GPIO_DEF uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+HW_GPIO_DEF uint16_t GPIO_ReadOutputData(GPIO_TypeDef* GPIOx);
 HW_GPIO_DEF void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 HW_GPIO_DEF void GPIO_ResetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 

@@ -84,9 +84,6 @@ HW_EXTI_DEF void EXTI_Init(EXTI_InitTypeDef* EXTI_InitStruct)
   }
 }
 
-
-
-
 HW_EXTI_DEF void EXTI_Configuration(void)
 { 
     EXTI_InitTypeDef EXTI_InitStructure;
