@@ -6,6 +6,7 @@
 
 //lib ap core
 #include "Get_SysClock.h"
+#include "SPI_Sw.h"
 
 //lib ap lib
 #include "gs1.h"
