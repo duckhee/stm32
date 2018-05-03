@@ -6,7 +6,8 @@
 HW_DMA_DEF void DMA_Start_Cmd(DMA_Channel_TypeDef* DMAy_Channelx, FunctionalState NewState);
 HW_DMA_DEF void DMA_Init(DMA_Channel_TypeDef* DMAy_Channelx, DMA_InitTypeDef* DMA_InitStruct);
 HW_DMA_DEF void DMA_DeInit(DMA_Channel_TypeDef* DMAy_Channelx);
-
+HW_DMA_DEF void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState);
+HW_DMA_DEF FlagStatus DMA_GetFlagStatus(uint32_t DMAy_FLAG);
 
 
 HW_DMA_DEF void DMA_Start_Cmd(DMA_Channel_TypeDef* DMAy_Channelx, FunctionalState NewState)
@@ -139,3 +140,75 @@ HW_DMA_DEF void DMA_DeInit(DMA_Channel_TypeDef* DMAy_Channelx)
   }
 }
 
+/**
+  * @brief  Enables or disables the specified DMAy Channelx interrupts.
+  * @param  DMAy_Channelx: where y can be 1 or 2 to select the DMA and
+  *   x can be 1 to 7 for DMA1 and 1 to 5 for DMA2 to select the DMA Channel.
+  * @param  DMA_IT: specifies the DMA interrupts sources to be enabled
+  *   or disabled.
+  *   This parameter can be any combination of the following values:
+  *     @arg DMA_IT_TC:  Transfer complete interrupt mask
+  *     @arg DMA_IT_HT:  Half transfer interrupt mask
+  *     @arg DMA_IT_TE:  Transfer error interrupt mask
+  * @param  NewState: new state of the specified DMA interrupts.
+  *   This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+HW_DMA_DEF void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState)
+{
+  if(NewState != DISABLE)
+  {
+    /* Enable the selected DMA interrupts */
+    DMAy_Channelx->CCR |= DMA_IT;
+
+  }
+  else
+  {
+    /* Disable the selected DMA interrupts */
+    DMAy_Channelx->CCR &= ~DMA_IT;
+  }
+}
+
+HW_DMA_DEF FlagStatus DMA_GetFlagStatus(uint32_t DMAy_FLAG)
+{
+  FlagStatus bitstatus = RESET;
+  uint32_t tmpreg = 0;
+  /* Calculate the used DMAy */
+  if((DMAy_FLAG & DMA_FLAG_Mask) != (uint32_t)RESET)
+  {
+    /* Get DMA2 ISR register value */
+    tmpreg = DMA2->ISR;
+  }
+  else
+  {
+    /* Get DMA2 ISR register value */
+    tmpreg = DMA1->ISR;
+  }
+
+
+  /* Check the status of the specified DMAy flag */
+  if((DMAy_FLAG & DMA_FLAG_Mask) != (uint32_t)RESET)
+  {
+     /* DMAy_FLAG is set */
+    bitstatus = SET;
+  }
+  else
+  {
+    /* DMAy_FLAG is reset */
+    bitstatus = RESET;
+  }
+  /* Return the DMAy_FLAG status */
+  return bitstatus;
+}
+
+HW_DMA_DEF void DMA_ClearFlag(uint32_t DMAy_FLAG)
+{
+  if((DMAy_FLAG & DMA_FLAG_Mask) != (uint32_t)RESET)
+  {
+    DMA2->IFCR = DMAy_FLAG;
+  }
+  else
+  {
+    DMA1->IFCR = DMAy_FLAG;
+  }
+}

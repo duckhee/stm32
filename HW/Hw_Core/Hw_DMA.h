@@ -119,5 +119,8 @@
 HW_DMA_DEF void DMA_Start_Cmd(DMA_Channel_TypeDef* DMAy_Channelx, FunctionalState NewState);
 HW_DMA_DEF void DMA_Init(DMA_Channel_TypeDef* DMAy_Channelx, DMA_InitTypeDef* DMA_InitStruct);
 HW_DMA_DEF void DMA_DeInit(DMA_Channel_TypeDef* DMAy_Channelx);
+HW_DMA_DEF void DMA_ITConfig(DMA_Channel_TypeDef* DMAy_Channelx, uint32_t DMA_IT, FunctionalState NewState);
+HW_DMA_DEF FlagStatus DMA_GetFlagStatus(uint32_t DMAy_FLAG);
+HW_DMA_DEF void DMA_ClearFlag(uint32_t DMAy_FLAG);
 
 #endif
