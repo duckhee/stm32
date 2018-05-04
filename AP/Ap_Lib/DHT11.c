@@ -43,7 +43,10 @@ DHT11_DEF void DHT11_Init(void)
     DHT11_Struct.Temperature = 0;
 }
 
-DHT11_DEF void DHT11_Start(void);
+DHT11_DEF void DHT11_Start(void)
+{
+    
+}
 DHT11_DEF void DHT11_Stop(void);
 DHT11_DEF uint8_t DHT11_GetHumidity(void);
 DHT11_DEF uint8_t DHT11_GetTemperature(void);
