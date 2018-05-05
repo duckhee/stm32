@@ -42,6 +42,19 @@ typedef struct {
 
 }Hw_Timer_InitTypedef;
 
+HW_TIMER_DEF void Hw_Timer_Init(void);
+HW_TIMER_DEF void Hw_Timer_Tick(void);
+HW_TIMER_DEF void Hw_Timer_Set(uint8_t TimerNum, uint16_t TimerData, void(*Fnct)(void), void *arg);
+HW_TIMER_DEF void Hw_Timer_Start(uint8_t TmrNum);
+HW_TIMER_DEF void Hw_Timer_Stop(uint8_t TmrNum);
+HW_TIMER_DEF void Hw_Timer_Reset(uint8_t TmrNum);
+HW_TIMER_DEF void Hw_Timer_Delay_ms(uint16_t DelayData);
+HW_TIMER_DEF signed short Hw_Timer_GetHandle(void);
+HW_TIMER_DEF unsigned int Hw_Timer_GetCountValue(void);
+
+HW_TIMER_DEF void Hw_Timer_TimeStart(Hw_Timer_InitTypedef* Timer_Init);
+HW_TIMER_DEf unsigned int Hw_Timer_TimeGetElapse(Hw_Timer_InitTypedef* Timer_preInit) ;
+
 
 
 #endif
