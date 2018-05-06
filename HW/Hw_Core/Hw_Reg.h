@@ -579,6 +579,45 @@ typedef struct
   uint16_t SPI_CRCPolynomial;       /*!< Specifies the polynomial used for the CRC calculation. */
 }SPI_InitTypeDef;
 
+
+/** @addtogroup STM32F10x_StdPeriph_Driver
+  * @{
+  */
+
+/** @addtogroup I2C
+  * @{
+  */
+
+/** @defgroup I2C_Exported_Types
+  * @{
+  */
+
+/** 
+  * @brief  I2C Init structure definition  
+  */
+
+typedef struct
+{
+  uint32_t I2C_ClockSpeed;          /*!< Specifies the clock frequency.
+                                         This parameter must be set to a value lower than 400kHz */
+
+  uint16_t I2C_Mode;                /*!< Specifies the I2C mode.
+                                         This parameter can be a value of @ref I2C_mode */
+
+  uint16_t I2C_DutyCycle;           /*!< Specifies the I2C fast mode duty cycle.
+                                         This parameter can be a value of @ref I2C_duty_cycle_in_fast_mode */
+
+  uint16_t I2C_OwnAddress1;         /*!< Specifies the first device own address.
+                                         This parameter can be a 7-bit or 10-bit address. */
+
+  uint16_t I2C_Ack;                 /*!< Enables or disables the acknowledgement.
+                                         This parameter can be a value of @ref I2C_acknowledgement */
+
+  uint16_t I2C_AcknowledgedAddress; /*!< Specifies if 7-bit or 10-bit address is acknowledged.
+                                         This parameter can be a value of @ref I2C_acknowledged_address */
+}I2C_InitTypeDef;
+
+
 /**
   * @brief  I2S Init structure definition
   */
@@ -1083,7 +1122,9 @@ typedef struct
 #define DMA2_Channel3       ((DMA_Channel_TypeDef *) DMA2_Channel3_BASE)
 #define DMA2_Channel4       ((DMA_Channel_TypeDef *) DMA2_Channel4_BASE)
 #define DMA2_Channel5       ((DMA_Channel_TypeDef *) DMA2_Channel5_BASE)
-
+//I2C define
+#define I2C1                ((I2C_TypeDef *) I2C1_BASE)
+#define I2C2                ((I2C_TypeDef *) I2C2_BASE)
 
 
 
