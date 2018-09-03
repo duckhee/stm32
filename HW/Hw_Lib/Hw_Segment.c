@@ -38,7 +38,7 @@ SEG_DEF void All_7SEG_Off(void)
 SEG_DEF void Output_7SEG_Number(unsigned int Num)
 {
     All_7SEG_Off();
-    switch(num)
+    switch(Num)
     {
         case 0 : 
             On_7SEG_OnePin(GPIO_7_SEG_A_PIN | GPIO_7_SEG_B_PIN | GPIO_7_SEG_C_PIN | GPIO_7_SEG_D_PIN | GPIO_7_SEG_E_PIN | GPIO_7_SEG_F_PIN);
@@ -87,8 +87,8 @@ SEG_DEF void Seven_SEG_TEST(void)
      = GPIO_7_SEG_POWER_PIN | GPIO_7_SEG_A_PIN | GPIO_7_SEG_B_PIN 
     | GPIO_7_SEG_C_PIN | GPIO_7_SEG_D_PIN | GPIO_7_SEG_E_PIN 
     | GPIO_7_SEG_F_PIN | GPIO_7_SEG_G_PIN | GPIO_7_SEG_DP_PIN;
-    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHZ;
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_pp;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
     GPIO_Init(GPIO_7_SEG, & GPIO_InitStructure);
 
     Power_SEG_On();

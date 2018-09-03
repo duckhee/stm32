@@ -2,6 +2,6 @@
 #define __MAIN_H__
 
 #include "menu.h"
-
+#include <stdio.h>
 
 #endif

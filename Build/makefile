@@ -46,12 +46,12 @@ SRC_AP = ../Main/main.c                                  \
 
 
 #src library c file
-SRC_LIB = ../LIB/Ld_printf.c                          \
-          ../LIB/Util.c
+SRC_LIB =         ../LIB/Util.c \
+                  #../LIB/Ld_printf.c \
 
 
 #src menu c file
-SRC_MENU = ../Menu/menu_command.c                                 \
+#SRC_MENU = ../Menu/menu_command.c                                 \
            ../Menu/Led_Command.c                                  \
 
 #source file 
@@ -166,13 +166,13 @@ CONLYFLAGS += -std=gnu99
 #  -Wl,...:     tell GCC to pass this to linker.
 #    -Map:      create map file
 #    --cref:    add cross reference to  map file
-#LDFLAGS = -static -nostdlib -nostartfiles -u _printf_float --specs=nano.specs -lc -lnosys -Wl,-Map=$(TARGET).map,--cref,--gc-sections -L./ -lc  -lm  -lc -lgcc -T.//STM32F10x_flash.ld
+#LDFLAGS = -static -nostartfiles -specs=nano.specs -u _printf_float -u _scanf_float -lc -lnosys -Wl,-Map=$(TARGET).map,--cref,--gc-sections -L./ -lc  -lm  -lc -lgcc -T.//STM32F10x_flash.ld
 #LDFLAGS += --specs=nano.specs -lc -lnosys
 #LDFLAGS += -u _printf_float
 #ELF32_LDFLAGS = -Wl,-T,stm32f10x.ld
 #LDFLAGS = -Map=$(TARGET).map --cref
 #이게 맞는지? 정적 파일과 lib 사용과 startfile 사용을 하지 않는다고 선언 하는 것 -nostdlib 라이브러리 사용 하지 않는다는 flag
-LDFLAGS = -static -nostdlib -nostartfiles -Wl,-Map=$(TARGET).map,--cref,--gc-sections -L./ -lc  -lm  -lc -lgcc -T.//STM32F103x_flash.ld
+LDFLAGS = -static -nostartfiles -specs=nano.specs -u _printf_float -u _scanf_float -Wl,-Map=$(TARGET).map,--cref,--gc-sections -L./ -lc  -lm -lnosys -lc -lgcc -T.//STM32F103x_flash.ld
 
 #object file size get elf size
 ELFSIZE = $(SIZE) -A $(TARGET).elf

@@ -24,7 +24,7 @@
 #include "Hw_Key.h"
 #include "Hw_Segment.h"
 //lib add
-#include "Ld_printf.h"
+//#include "Ld_printf.h"
 #include "Util.h"
 
 #ifdef HW_LOCAL
